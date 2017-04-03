@@ -4,7 +4,7 @@
   "description": "A NodeJS package that provides implementations of some data structures",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha ./test/structures --recursive"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/malpercio/data-holder/issues"
   },
-  "homepage": "https://github.com/malpercio/data-holder#readme"
+  "homepage": "https://github.com/malpercio/data-holder#readme",
+  "devDependencies": {
+    "faker": "^3.1.0",
+    "mocha": "^3.2.0"
+  }
 }
