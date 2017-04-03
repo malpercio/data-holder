@@ -2,10 +2,10 @@ module.exports = function(implementation){
   let assert = require('assert');
   let faker = require('faker');
 
-  let List = require('../../src/list/' + implementation);
+  let dataHolder = require('../../index.js')();
+  let List = dataHolder[implementation];
 
-  // let numberOfItems = faker.random.number()%10 + 1;
-  let numberOfItems = 100;
+  let numberOfItems = faker.random.number()%10 + 1;
   let arbitraryElement = 'Bunny';
   let i;
 
