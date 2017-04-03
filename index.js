@@ -3,6 +3,6 @@ module.exports = (promiseLibrary) => {
     promiseLibrary = global.Promise;
   }
   return {
-    LinkedList: require('./src/list/LinkedList')(promiseLibrary)
+    SyncLinkedList: require('./src/list/SyncLinkedList')(promiseLibrary)
   }
 };

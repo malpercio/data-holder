@@ -4,4 +4,4 @@ let faker = require('faker');
 let numberOfItems = faker.random.number() + 1;
 let arbitraryElement = 'Bunny';
 
-let genericTests = require('../../lib/genericList.test')('LinkedList');
+let genericTests = require('../../lib/genericSyncList.test')('LinkedList');
