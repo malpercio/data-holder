@@ -1,6 +1,7 @@
 module.exports = function(implementation){
   let assert = require('assert');
   let faker = require('faker');
+  let times = require('async/times');
 
   let dataHolder = require('../../index.js')();
   let List = dataHolder[implementation];
@@ -20,45 +21,83 @@ module.exports = function(implementation){
     });
 
     it('should add an element',(done)=>{
-      let testingList = new List(),
-        i;
-      for (i=0; i<= numberOfItems; i++){
-        testingList.add(i);
-        if (!testingList.contains(i)){
-          done(new Error('Element not found after insertion'));
-        }
-      }
-      done();
+      let testingList = new List();
+      times(numberOfItems, (n, next) => {
+        testingList.add(n, (err) => {
+          if (err){
+            return next(err);
+          }
+          if (!testingList.contains(n)){
+            return next(new Error('Element not found after insertion'));
+          }
+          if (testingList.length !== n+1){
+            done(new Error('Length does not increases when adding elements'));
+          }
+          next();
+        });
+      }, done);
     });
 
     it('should pop an element',(done)=>{
       let testingList = new List(),
         i;
-      for (i=0; i<= numberOfItems; i++){
-        testingList.add(i);
-      }
-      for (i=numberOfItems; i>= 0; i--){
-        testingList.pop();
-        if(testingList.contains(i)){
-          done(new Error('Element found after deletion'));
+      times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
+        if (err){
+          return done(err);
         }
-      }
-      done();
+        times(numberOfItems, (n, next) => {
+          testingList.pop((err) => {
+            if (err){
+              return next(err);
+            }
+            if (testingList.contains(numberOfItems - n)){
+              next(new Error('Element found after deletion'));
+            }
+            if (testingList.length !== numberOfItems - n - 1){
+                next(new Error('Length does not decreases when removing last item'));
+            }
+            next();
+          });
+        }, done);
+      });
     });
 
-    it('should unshift an element',(done)=>{
-      let testingList = new List(),
-        i;
-      for (i=0; i<= numberOfItems; i++){
-        testingList.add(i);
-      }
-      for (i=0; i<= numberOfItems; i++){
-        testingList.unshift();
-        if(testingList.contains(i)){
-          done(new Error('Element found after deletion'));
+    it('should shift an element',(done)=>{
+      let testingList = new List();
+      times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
+        if (err){
+          return done(err);
         }
-      }
-      done();
+        times(numberOfItems, (n, next) => {
+          testingList.shift((err) => {
+            if (err){
+              return next(err);
+            }
+            if (testingList.contains(n)){
+              return next(new Error('Element found after deletion'));
+            }
+            next();
+          });
+        }, done);
+      });
+    });
+
+    it('should add an element',(done)=>{
+      let testingList = new List();
+      times(numberOfItems, (n, next) => {
+        testingList.unshift(n, (err) => {
+          if (err){
+            return next(err);
+          }
+          if (!testingList.contains(n)){
+            return next(new Error('Element not found after insertion'));
+          }
+          if (testingList.length !== n+1){
+            done(new Error('Length does not increases when adding elements'));
+          }
+          next();
+        });
+      }, done);
     });
 
     it('should splice an element',(done)=>{
@@ -76,72 +115,52 @@ module.exports = function(implementation){
       done();
     });
 
-    it('should have the given length', function(done){
+    it('should have the given initial length', function(done){
       let testingList = new List();
       if (testingList.length !== 0){
           return done(new Error('Length is not zero'));
       }
-      for (i = 1; i <= numberOfItems; i++){
-        testingList.add(arbitraryElement);
-        if (testingList.length !== i){
-          done(new Error('Length does not increases when adding elements'));
-        }
-      }
-      for (i = numberOfItems - 1; i >= 0; i--){
-        testingList.unshift();
-        if (testingList.length !== i){
-          done(new Error('Length does not decreases when removing head' + i));
-        }
-      }
-      let repopulate = ()=>{
-        for (i = 1; i <= numberOfItems; i++){
-          testingList.add(arbitraryElement);
-        }
-      };
-      repopulate();
-      for (i = numberOfItems - 1 ; i >= 0; i--){
-        testingList.pop();
-        if (testingList.length !== i){
-          done(new Error('Length does not decreases when removing last item'));
-        }
-      }
-      repopulate();
-      i = numberOfItems;
-      while(testingList.length > 2){
-        testingList.splice(1);
-        i--;
-        if (testingList.length !== i){
-          done(new Error('Length does not decreases when removing arbitrary item'));
-        }
-      }
+
+
+        // if (testingList.length !== n+1){
+        //   done(new Error('Length does not decreases when removing arbitrary item'));
+        // if (testingList.length !== n+1){
+        //   done(new Error('Length does not decreases when removing head'));
+        // }
       done();
     });
 
     it('should find an existing item',function(done){
       let testingList = new List();
-      for (i = 1; i <= numberOfItems; i++){
-        testingList.add(i);
-        if (!testingList.contains(i)){
-          return done(new Error('Item not found.'));
+      times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
+        if(err){
+          return done(err);
         }
-      }
-      done();
+        for (i = 0; i < numberOfItems; i++){
+          if (!testingList.contains(i)){
+            return done(new Error('Item not found.'));
+          }
+        }
+        done();
+      });
     });
 
     it('should be an iterable', (done)=>{
       let testingList = new List(),
-        i;
-      for (i=0; i<= numberOfItems; i++){
-        testingList.add(i);
-      }
-      i=0;
-      for(item of testingList){
-        if (item !== i){
-          done(new Error('Item not found in place'));
+      i;
+      times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
+        if (err){
+          return done(err);
         }
-        i++;
-      }
-      done();
+        i=0;
+        for(item of testingList){
+          if (item !== i){
+            done(new Error('Item not found in place'));
+          }
+          i++;
+        }
+        done();
+      });
     });
 
     it('should implement toString',(done)=>{
