@@ -8,7 +8,6 @@ module.exports = function(implementation){
 
   let numberOfItems = faker.random.number()%10 + 1;
   let arbitraryElement = 'Bunny';
-  let i;
 
   describe('Generic list behaviour - ' + implementation, function(){
 
@@ -31,7 +30,7 @@ module.exports = function(implementation){
             return next(new Error('Element not found after insertion'));
           }
           if (testingList.length !== n+1){
-            done(new Error('Length does not increases when adding elements'));
+            return next(new Error('Length does not increases when adding elements'));
           }
           next();
         });
@@ -39,8 +38,7 @@ module.exports = function(implementation){
     });
 
     it('should pop an element',(done)=>{
-      let testingList = new List(),
-        i;
+      let testingList = new List();
       times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
         if (err){
           return done(err);
@@ -51,10 +49,10 @@ module.exports = function(implementation){
               return next(err);
             }
             if (testingList.contains(numberOfItems - n)){
-              next(new Error('Element found after deletion'));
+              return next(new Error('Element found after deletion'));
             }
             if (testingList.length !== numberOfItems - n - 1){
-                next(new Error('Length does not decreases when removing last item'));
+              return next(new Error('Length does not decreases when removing last item'));
             }
             next();
           });
@@ -93,7 +91,7 @@ module.exports = function(implementation){
             return next(new Error('Element not found after insertion'));
           }
           if (testingList.length !== n+1){
-            done(new Error('Length does not increases when adding elements'));
+            return next(new Error('Length does not increases when adding elements'));
           }
           next();
         });
@@ -109,7 +107,10 @@ module.exports = function(implementation){
       for (i=1; i<= numberOfItems; i++){
         testingList.splice(1);
         if(testingList.contains(i)){
-          done(new Error('Element found after deletion'));
+          return done(new Error('Element found after deletion'));
+        }
+        if (testingList.length !== numberOfItems-i+1){
+          return done(new Error('Length does not decreases when removing arbitrary item'));
         }
       }
       done();
@@ -120,13 +121,6 @@ module.exports = function(implementation){
       if (testingList.length !== 0){
           return done(new Error('Length is not zero'));
       }
-
-
-        // if (testingList.length !== n+1){
-        //   done(new Error('Length does not decreases when removing arbitrary item'));
-        // if (testingList.length !== n+1){
-        //   done(new Error('Length does not decreases when removing head'));
-        // }
       done();
     });
 
@@ -155,7 +149,7 @@ module.exports = function(implementation){
         i=0;
         for(item of testingList){
           if (item !== i){
-            done(new Error('Item not found in place'));
+            return done(new Error('Item not found in place'));
           }
           i++;
         }
@@ -166,17 +160,17 @@ module.exports = function(implementation){
     it('should implement toString',(done)=>{
       let testingList = new List();
       if (testingList.toString() !== '[]'){
-        done(new Error('Empty string is simply wrong'))
+        return done(new Error('Empty string is simply wrong'))
       }
       for (i = 1; i <= numberOfItems; i++){
         testingList.add(i);
       }
       if (/^\[(\d+,)*\d+\]$/.exec(testingList.toString()).input!== testingList.toString()){
-        done(new Error('Incorrect comma separation'));
+        return done(new Error('Incorrect comma separation'));
       }
       for (i = 1; i <= numberOfItems; i++){
         if (testingList.toString().indexOf(i) === -1){
-          done(new Error('Missing item' + i));
+          return done(new Error('Missing item' + i));
         }
       }
       done();

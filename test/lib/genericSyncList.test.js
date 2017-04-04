@@ -7,7 +7,6 @@ module.exports = function(implementation){
 
   let numberOfItems = faker.random.number()%10 + 1;
   let arbitraryElement = 'Bunny';
-  let i;
 
   describe('Generic synchronous list behaviour - ' + implementation, function(){
 
