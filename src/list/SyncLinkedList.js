@@ -1,4 +1,4 @@
-function factory(promiseLibrary, callback){
+function factory(promiseLibrary){
 
   class ListNode{
     constructor(value, next){
@@ -15,49 +15,35 @@ function factory(promiseLibrary, callback){
       this.tail = undefined;
     }
 
-    add(element, cb){
+    add(element){
       this.length++;
       if (this.length === 1){
         this.head = new ListNode(element, undefined);
         this.tail = this.head;
-        return callback(null, cb);
+        return;
       }
       let newTail = new ListNode(element, undefined);
       this.tail.next = newTail;
-      this.tail = newTail;
-      return callback(null, cb);
-    }
+      this.tail = newTail;  }
 
-    shift(cb){
+    unshift(){
       if(this.length == 0){
-        return callback(null, cb, undefined);
+        return undefined;
       }
       this.length--;
       let savedHead = this.head;
       if (this.length <= 1){
         this.head = this.tail;
-        return callback(null, cb, savedHead);
+        return savedHead;
       }
       this.head = this.head.next;
-      return callback(null, cb, savedHead);
+      return savedHead;
     }
 
-    unshift(element, cb){
-      this.length++;
-      if (this.length === 1){
-        this.head = new ListNode(element, undefined);
-        this.tail = this.head;
-        return callback(null, cb);
-      }
-      let savedHead = this.head;
-      this.head = new ListNode(element, savedHead);
-      return callback(null, cb);
-    }
-
-    pop(cb){
+    pop(){
       let i;
       if(this.length == 0){
-        return callback(null, cb, undefined);
+        return undefined;
       }
       this.length--;
       let savedTail = this.tail;
@@ -66,12 +52,12 @@ function factory(promiseLibrary, callback){
         beforeTail = beforeTail.next;
       }
       this.tail = this.beforeTail;
-      return callback(null, cb, savedTail);
+      return savedTail;
     }
 
-    splice(number, cb){
+    splice(number){
       if(number >= this.length || this.length == 0 || number < 0){
-        return callback(null, cb, undefined);
+        return undefined;
       }
       let currentNode = this.head,
         savedNode,
@@ -82,7 +68,7 @@ function factory(promiseLibrary, callback){
       savedNode = currentNode.next;
       currentNode.next = currentNode.next? currentNode.next.next: undefined;
       this.length--;
-      return callback(null, cb, savedNode);
+      return savedNode;
     }
 
     *[Symbol.iterator](){
@@ -108,7 +94,6 @@ function factory(promiseLibrary, callback){
       }
       return false;
     }
-
     toString(){
       let currentNode = this.head,
         string = '[',
@@ -126,6 +111,5 @@ function factory(promiseLibrary, callback){
 }
 
 module.exports = (promiseLibrary) => {
-  var callback = require('../lib/callbackToPromise')(promiseLibrary);
-  return factory(promiseLibrary, callback);
+  return factory(promiseLibrary);
 };
