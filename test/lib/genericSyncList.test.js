@@ -178,5 +178,20 @@ module.exports = function(implementation){
       }
       done();
     });
+
+    it('should implement contains',(done)=>{
+      let testingList = new List(),
+        i;
+        for(i = 0; i < numberOfItems; i++){
+          testingList.add(i);
+        }
+        for(i = 0; i < numberOfItems; i++){
+          if (!testingList.contains(i)){
+            return done(new Error('Item not found'));
+          }
+        }
+        done();
+    });
+
   });
 }
