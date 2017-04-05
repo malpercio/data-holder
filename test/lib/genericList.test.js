@@ -79,7 +79,7 @@ module.exports = function(implementation){
       });
     });
 
-    it('should add an element',(done)=>{
+    it('should unshift an element',(done)=>{
       let testingList = new List();
       times(numberOfItems, (n, next) => {
         testingList.unshift(n, (err) => {
