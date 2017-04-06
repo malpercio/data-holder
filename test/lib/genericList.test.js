@@ -25,7 +25,7 @@ module.exports = function(implementation){
           if (err){
             return next(err);
           }
-          if (!testingList.contains(n)){
+          if (testingList.tail.value != n){
             return next(new Error('Element not found after insertion'));
           }
           if (testingList.length !== n+1){
@@ -43,15 +43,18 @@ module.exports = function(implementation){
           return done(err);
         }
         times(numberOfItems, (n, next) => {
-          testingList.pop((err) => {
+          testingList.pop((err, value) => {
             if (err){
               return next(err);
             }
-            if (testingList.contains(numberOfItems - n)){
+            if (testingList.tail && testingList.tail.value == numberOfItems - n){
               return next(new Error('Element found after deletion'));
             }
             if (testingList.length !== numberOfItems - n - 1){
               return next(new Error('Length does not decreases when removing last item'));
+            }
+            if(value != numberOfItems - n - 1){
+              return done(new Error('Returning element is not correct'));
             }
             next();
           });
@@ -66,12 +69,15 @@ module.exports = function(implementation){
           return done(err);
         }
         times(numberOfItems, (n, next) => {
-          testingList.shift((err) => {
+          testingList.shift((err, value) => {
             if (err){
               return next(err);
             }
             if (testingList.contains(n)){
               return next(new Error('Element found after deletion'));
+            }
+            if(value != n ){
+              return done(new Error('Returning element is not correct'));
             }
             next();
           });
@@ -86,7 +92,7 @@ module.exports = function(implementation){
           if (err){
             return next(err);
           }
-          if (!testingList.contains(n)){
+          if (testingList.head.value != n){
             return next(new Error('Element not found after insertion'));
           }
           if (testingList.length !== n+1){
@@ -105,7 +111,7 @@ module.exports = function(implementation){
       }
       for (i=1; i<= numberOfItems; i++){
         testingList.splice(1);
-        if(testingList.contains(i)){
+        if(testingList.head.next &&testingList.head.next.value != i + 1){
           return done(new Error('Element found after deletion'));
         }
         if (testingList.length !== numberOfItems-i+1){

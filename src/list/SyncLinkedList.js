@@ -46,10 +46,10 @@ function factory(promiseLibrary){
       let savedHead = this.head;
       if (this.length <= 1){
         this.head = this.tail;
-        return savedHead;
+        return savedHead.value;
       }
       this.head = this.head.next;
-      return savedHead;
+      return savedHead.value;
     }
 
     pop(){
@@ -58,13 +58,19 @@ function factory(promiseLibrary){
         return undefined;
       }
       this.length--;
+      if (this.length == 0){
+        let savedValue = this.head.value;
+        this.head = this.tail = undefined;
+        return savedValue;
+      }
       let savedTail = this.tail;
       let beforeTail = this.head;
-      for(i=1; i<=this.length; i++){
+      for(i=1; i<this.length; i++){
         beforeTail = beforeTail.next;
       }
-      this.tail = this.beforeTail;
-      return savedTail;
+      this.tail = beforeTail;
+      this.tail.next = undefined;
+      return savedTail.value;
     }
 
     splice(number){
@@ -80,7 +86,7 @@ function factory(promiseLibrary){
       savedNode = currentNode.next;
       currentNode.next = currentNode.next? currentNode.next.next: undefined;
       this.length--;
-      return savedNode;
+      return savedNode.value;
     }
 
     *[Symbol.iterator](){
