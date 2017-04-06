@@ -4,6 +4,8 @@ module.exports = (promiseLibrary) => {
   }
   return {
     SyncLinkedList: require('./src/list/SyncLinkedList')(promiseLibrary),
-    LinkedList: require('./src/list/LinkedList')(promiseLibrary)
+    LinkedList: require('./src/list/LinkedList')(promiseLibrary),
+    SyncDoubleLinkedList: require('./src/list/SyncDoubleLinkedList')(promiseLibrary),
+    SyncList: require('./src/list/SyncDoubleLinkedList')(promiseLibrary)
   }
 };
