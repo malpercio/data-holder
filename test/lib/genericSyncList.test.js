@@ -45,16 +45,28 @@ module.exports = function(implementation){
       done();
     });
 
-    it('should unshift an element',(done)=>{
+    it('should shift an element',(done)=>{
       let testingList = new List(),
         i;
       for (i=0; i<= numberOfItems; i++){
         testingList.add(i);
       }
       for (i=0; i<= numberOfItems; i++){
-        testingList.unshift();
+        testingList.shift();
         if(testingList.contains(i)){
           done(new Error('Element found after deletion'));
+        }
+      }
+      done();
+    });
+
+    it('should unshift an element',(done)=>{
+      let testingList = new List(),
+        i;
+      for (i=0; i<= numberOfItems; i++){
+        testingList.unshift(i);
+        if(!testingList.contains(i)){
+          done(new Error('Element not found after deletion'));
         }
       }
       done();
@@ -76,7 +88,12 @@ module.exports = function(implementation){
     });
 
     it('should have the given length', function(done){
-      let testingList = new List();
+      let testingList = new List(),
+        repopulate = ()=>{
+        for (i = 1; i <= numberOfItems; i++){
+          testingList.add(arbitraryElement);
+        }
+      };
       if (testingList.length !== 0){
           return done(new Error('Length is not zero'));
       }
@@ -87,17 +104,17 @@ module.exports = function(implementation){
         }
       }
       for (i = numberOfItems - 1; i >= 0; i--){
-        testingList.unshift();
+        testingList.shift();
         if (testingList.length !== i){
           done(new Error('Length does not decreases when removing head' + i));
         }
       }
-      let repopulate = ()=>{
-        for (i = 1; i <= numberOfItems; i++){
-          testingList.add(arbitraryElement);
+      for (i = 1; i<= numberOfItems; i++){
+        testingList.unshift(1);
+        if (testingList.length !== i){
+          done(new Error('Length does not decreases when inserting head' + i));
         }
-      };
-      repopulate();
+      }
       for (i = numberOfItems - 1 ; i >= 0; i--){
         testingList.pop();
         if (testingList.length !== i){
@@ -161,5 +178,20 @@ module.exports = function(implementation){
       }
       done();
     });
+
+    it('should implement contains',(done)=>{
+      let testingList = new List(),
+        i;
+        for(i = 0; i < numberOfItems; i++){
+          testingList.add(i);
+        }
+        for(i = 0; i < numberOfItems; i++){
+          if (!testingList.contains(i)){
+            return done(new Error('Item not found'));
+          }
+        }
+        done();
+    });
+
   });
 }

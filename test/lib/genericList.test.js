@@ -6,7 +6,7 @@ module.exports = function(implementation){
   let dataHolder = require('../../index.js')();
   let List = dataHolder[implementation];
 
-  let numberOfItems = faker.random.number()%10 + 1;
+  let numberOfItems = faker.random.number()%100 + 1;
   let arbitraryElement = 'Bunny';
 
   describe('Generic list behaviour - ' + implementation, () => {
@@ -79,7 +79,7 @@ module.exports = function(implementation){
       });
     });
 
-    it('should add an element',(done)=>{
+    it('should unshift an element',(done)=>{
       let testingList = new List();
       times(numberOfItems, (n, next) => {
         testingList.unshift(n, (err) => {
@@ -155,5 +155,45 @@ module.exports = function(implementation){
         done();
       });
     });
+
+    it('should implement toString',(done)=>{
+      let testingList = new List(),
+        i;
+      if (testingList.toString() !== '[]'){
+        return done(new Error('Empty string is simply wrong'))
+      }
+      times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
+        if (err){
+          return done(err);
+        }
+        if (/^\[(\d+,)*\d+\]$/.exec(testingList.toString()).input!== testingList.toString()){
+          return done(new Error('Incorrect comma separation'));
+        }
+        for (i = 1; i < numberOfItems; i++){
+          if (testingList.toString().indexOf(i) === -1){
+            return done(new Error('Missing item'));
+          }
+        }
+        done();
+      });
+    });
+
+    it('should implement contains',(done)=>{
+      let testingList = new List(),
+        i;
+      times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
+        if (err){
+          return done(err);
+        }
+        for(i = 0; i < numberOfItems; i++){
+          if (!testingList.contains(i)){
+            return done(new Error('Item not found'));
+          }
+        }
+        done();
+      });
+    });
+
+
   });
 }

@@ -24,9 +24,21 @@ function factory(promiseLibrary){
       }
       let newTail = new ListNode(element, undefined);
       this.tail.next = newTail;
-      this.tail = newTail;  }
+      this.tail = newTail;
+    }
 
-    unshift(){
+    unshift(element){
+      this.length++;
+      if (this.length === 1){
+        this.head = new ListNode(element, undefined);
+        this.tail = this.head;
+        return;
+      }
+      let newHead = new ListNode(element, this.head);
+      this.head = newHead;
+    }
+
+    shift(){
       if(this.length == 0){
         return undefined;
       }
