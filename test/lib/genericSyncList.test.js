@@ -23,8 +23,8 @@ module.exports = function(implementation){
         i;
       for (i=0; i<= numberOfItems; i++){
         testingList.add(i);
-        if (!testingList.contains(i)){
-          done(new Error('Element not found after insertion'));
+        if (testingList.tail.value != i){
+          return done(new Error('Element not found after insertion'));
         }
       }
       done();
@@ -32,14 +32,18 @@ module.exports = function(implementation){
 
     it('should pop an element',(done)=>{
       let testingList = new List(),
-        i;
+        i,
+        value;
       for (i=0; i<= numberOfItems; i++){
         testingList.add(i);
       }
-      for (i=numberOfItems; i>= 0; i--){
-        testingList.pop();
-        if(testingList.contains(i)){
-          done(new Error('Element found after deletion'));
+      for (i=numberOfItems; i > 0; i--){
+        value = testingList.pop();
+        if(testingList.tail.value == i){
+          return done(new Error('Element found after deletion'));
+        }
+        if(value == i - 1){
+          return done(new Error('Returning element is not correct'));
         }
       }
       done();
@@ -47,14 +51,18 @@ module.exports = function(implementation){
 
     it('should shift an element',(done)=>{
       let testingList = new List(),
-        i;
+        i,
+        value;
       for (i=0; i<= numberOfItems; i++){
         testingList.add(i);
       }
       for (i=0; i<= numberOfItems; i++){
-        testingList.shift();
+        value = testingList.shift();
         if(testingList.contains(i)){
-          done(new Error('Element found after deletion'));
+          return done(new Error('Element found after deletion'));
+        }
+        if(value != i ){
+          return done(new Error('Returning element is not correct'));
         }
       }
       done();
@@ -65,8 +73,8 @@ module.exports = function(implementation){
         i;
       for (i=0; i<= numberOfItems; i++){
         testingList.unshift(i);
-        if(!testingList.contains(i)){
-          done(new Error('Element not found after deletion'));
+        if(testingList.head.value != i){
+          return done(new Error('Element not found after insertion'));
         }
       }
       done();
@@ -74,14 +82,20 @@ module.exports = function(implementation){
 
     it('should splice an element',(done)=>{
       let testingList = new List(),
-        i;
+        i,
+        value;
       for (i=0; i<= numberOfItems; i++){
         testingList.add(i);
       }
       for (i=1; i<= numberOfItems; i++){
-        testingList.splice(1);
+        value = testingList.splice(1);
         if(testingList.contains(i)){
-          done(new Error('Element found after deletion'));
+          return done(new Error('Element found after deletion'));
+        }
+        if (testingList.head.next){
+          if(testingList.head.next.value != i + 1 ){
+            return done(new Error('Returning element is not correct'));
+          }
         }
       }
       done();
@@ -100,25 +114,25 @@ module.exports = function(implementation){
       for (i = 1; i <= numberOfItems; i++){
         testingList.add(arbitraryElement);
         if (testingList.length !== i){
-          done(new Error('Length does not increases when adding elements'));
+          return done(new Error('Length does not increases when adding elements'));
         }
       }
       for (i = numberOfItems - 1; i >= 0; i--){
         testingList.shift();
         if (testingList.length !== i){
-          done(new Error('Length does not decreases when removing head' + i));
+          return done(new Error('Length does not decreases when removing head' + i));
         }
       }
       for (i = 1; i<= numberOfItems; i++){
         testingList.unshift(1);
         if (testingList.length !== i){
-          done(new Error('Length does not decreases when inserting head' + i));
+          return done(new Error('Length does not decreases when inserting head' + i));
         }
       }
       for (i = numberOfItems - 1 ; i >= 0; i--){
         testingList.pop();
         if (testingList.length !== i){
-          done(new Error('Length does not decreases when removing last item'));
+          return done(new Error('Length does not decreases when removing last item'));
         }
       }
       repopulate();
@@ -127,7 +141,7 @@ module.exports = function(implementation){
         testingList.splice(1);
         i--;
         if (testingList.length !== i){
-          done(new Error('Length does not decreases when removing arbitrary item'));
+          return done(new Error('Length does not decreases when removing arbitrary item'));
         }
       }
       done();
