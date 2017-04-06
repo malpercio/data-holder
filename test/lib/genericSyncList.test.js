@@ -42,7 +42,7 @@ module.exports = function(implementation){
         if(testingList.tail.value == i){
           return done(new Error('Element found after deletion'));
         }
-        if(value == i - 1){
+        if(value != i ){
           return done(new Error('Returning element is not correct'));
         }
       }
@@ -92,10 +92,8 @@ module.exports = function(implementation){
         if(testingList.contains(i)){
           return done(new Error('Element found after deletion'));
         }
-        if (testingList.head.next){
-          if(testingList.head.next.value != i + 1 ){
-            return done(new Error('Returning element is not correct'));
-          }
+        if(testingList.head.next &&testingList.head.next.value != i + 1 ){
+          return done(new Error('Returning element is not correct'));
         }
       }
       done();
