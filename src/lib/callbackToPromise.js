@@ -1,4 +1,9 @@
 module.exports = (promiseLibrary) => {
+  if (typeof(promiseLibrary) !== 'function'){
+    return (err, cb, result) => {
+      return result;
+    }
+  }
   return (err, cb, result) => {
     if (cb){
       return cb(err, result);
