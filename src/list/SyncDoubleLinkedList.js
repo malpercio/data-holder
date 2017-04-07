@@ -46,9 +46,8 @@ function factory(promiseLibrary){
       }
       this.length--;
       let savedHead = this.head;
-      if (this.length <= 1){
-        this.head = this.tail;
-        this.head.prev = undefined;
+      if (this.length == 0){
+        this.head = this.tail = undefined;
         return savedHead.value;
       }
       this.head = this.head.next;
