@@ -1,19 +1,7 @@
-function factory(promiseLibrary){
+function factory(AbstractList, ListNode, promiseLibrary, callback){
 
-  class ListNode{
-    constructor(value, next){
-      this.value = value;
-      this.next = next;
-    }
-  }
 
-  class List{
-
-    constructor(){
-      this.length = 0;
-      this.head  = undefined;
-      this.tail = undefined;
-    }
+  class List extends AbstractList{
 
     add(element){
       this.length++;
@@ -88,46 +76,13 @@ function factory(promiseLibrary){
       this.length--;
       return savedNode.value;
     }
-
-    *[Symbol.iterator](){
-      let savedValue,
-        currentNode,
-        i;
-      currentNode= this.head;
-      for (i=1; i<= this.length; i++){
-        savedValue = currentNode.value;
-        currentNode = currentNode.next;
-        yield savedValue;
-      }
-    }
-
-    contains(element){
-      let currentNode = this.head,
-        i;
-      for (i=1; i<= this.length; i++){
-        if (currentNode.value === element){
-          return true;
-        }
-        currentNode = currentNode.next;
-      }
-      return false;
-    }
-    toString(){
-      let currentNode = this.head,
-        string = '[',
-        i;
-      for (i=0; i< this.length; i++){
-        string += currentNode.value;
-        string += currentNode.next !== undefined?',':'';
-        currentNode = currentNode.next;
-      }
-      return string+']';
-    }
   }
 
   return List;
 }
 
 module.exports = (promiseLibrary) => {
-  return factory(promiseLibrary);
+  var callback = require('../lib/callbackToPromise')(promiseLibrary);
+  var [List, ListNode] = require('./AbstractList')(promiseLibrary, callback);
+  return factory(List, ListNode, promiseLibrary, callback);
 };
