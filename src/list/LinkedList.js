@@ -1,4 +1,4 @@
-function factory(AbstractList, ListNode, promiseLibrary, callback){
+function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerClasses){
 
   class List extends AbstractList{
 
@@ -78,11 +78,14 @@ function factory(AbstractList, ListNode, promiseLibrary, callback){
       return callback(null, cb, savedNode.value);
     }
   }
+  if (returnInnerClasses){
+    return [List, ListNode];
+  }
   return List;
 }
 
-module.exports = (promiseLibrary) => {
+module.exports = (promiseLibrary, returnInnerClasses) => {
   var callback = require('../lib/callbackToPromise')(promiseLibrary);
   var [List, ListNode] = require('./AbstractList')(promiseLibrary, callback);
-  return factory(List, ListNode, promiseLibrary, callback);
+  return factory(List, ListNode, promiseLibrary, callback, returnInnerClasses);
 };

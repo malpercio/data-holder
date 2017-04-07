@@ -1,4 +1,4 @@
-function factory(AbstractList, Node, promiseLibrary, callback){
+function factory(AbstractList, Node, promiseLibrary, callback, returnInnerClasses){
 
   class ListNode extends Node{
     constructor(value, prev, next){
@@ -84,11 +84,14 @@ function factory(AbstractList, Node, promiseLibrary, callback){
     }
   }
 
+  if (returnInnerClasses){
+    return [List, ListNode];
+  }
   return List;
 }
 
-module.exports = (promiseLibrary) => {
+module.exports = (promiseLibrary, returnInnerClasses) => {
   var callback = require('../lib/callbackToPromise')(promiseLibrary);
   var [List, ListNode] = require('./AbstractList')(promiseLibrary, callback);
-  return factory(List, ListNode, promiseLibrary, callback);
+  return factory(List, ListNode, promiseLibrary, callback, returnInnerClasses);
 };
