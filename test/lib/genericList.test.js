@@ -85,23 +85,38 @@ module.exports = function(implementation){
       });
     });
 
-    it('should unshift an element',(done)=>{
-      let testingList = new List();
-      times(numberOfItems, (n, next) => {
-        testingList.unshift(n, (err) => {
-          if (err){
-            return next(err);
-          }
-          if (testingList.head.value != n){
-            return next(new Error('Element not found after insertion'));
-          }
-          if (testingList.length !== n+1){
-            return next(new Error('Length does not increases when adding elements'));
-          }
-          next();
-        });
-      }, done);
-    });
+    if (implementation == 'OrderedList'){
+      it('should not unshift an element', (done) => {
+        let testingList = new List();
+        times(numberOfItems, (n, next) => {
+          testingList.unshift(n, (err) => {
+            if (err){
+              return next();
+            }
+            next(new Error('OrderedList should not implement unshift.'));
+          });
+        }, done);
+      });
+    }
+    else{
+      it('should unshift an element',(done)=>{
+        let testingList = new List();
+        times(numberOfItems, (n, next) => {
+          testingList.unshift(n, (err) => {
+            if (err){
+              return next(err);
+            }
+            if (testingList.head.value != n){
+              return next(new Error('Element not found after insertion'));
+            }
+            if (testingList.length !== n+1){
+              return next(new Error('Length does not increases when adding elements'));
+            }
+            next();
+          });
+        }, done);
+      });
+    }
 
     it('should splice an element',(done)=>{
       let testingList = new List(),
