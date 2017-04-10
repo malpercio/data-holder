@@ -33,7 +33,7 @@ describe('Queue behaviour', () => {
     for (i = 1; i <= numberOfItems; i++){
       testingQueue.push(i);
       if (testingQueue.length != i){
-        return done(new Error('Length does not decrease when adding elements'));
+        return done(new Error('Length does not increase when adding elements'));
       }
       if(testingQueue.elements[i - 1] != i){
         return done(new Error('Element not found at bottom'));
