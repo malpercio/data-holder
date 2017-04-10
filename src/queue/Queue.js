@@ -8,7 +8,7 @@ function factory(promiseLibrary, callback, returnInnerClasses){
     }
 
     pop(cb){
-      let lastElement = this.elements.pop();
+      let lastElement = this.elements.shift();
       this.length = this.elements.length;
       return callback(null, cb, lastElement);
     }
@@ -19,11 +19,11 @@ function factory(promiseLibrary, callback, returnInnerClasses){
       return callback(null, cb);
     }
 
-    hasNext(){
+    hasNext(cb){
       return callback(null, cb, this.length > 0);
     }
 
-    empty(){
+    empty(cb){
       this.elements = [];
       this.length = 0;
       return callback(null, cb);
