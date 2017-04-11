@@ -308,5 +308,88 @@ As the name implies, it's always ordered. Can be iterated with a `for...of`.
 
 ## Stack
 FILO structure.
+
+### Available Methods
+
+* **toString()**
+
+  Processes a string representation.
+
+  Returns: string
+
+* **push(element[, cb])**
+
+  Adds an element to the structure.
+
+  Parameters:
+  - element : an object to be added
+  - cb : callback to be executed
+
+  Returns: nothing
+
+* **pop([, cb])**
+
+  Removes the last item from the list.
+
+  Parameters:
+  - cb : callback to be executed
+
+  Returns: obj; the removed item
+
+* **hasNext()**
+
+  Decides if there are any items left.
+  Returns: boolean
+
+* **empty([, cb])**
+
+  Empties the structure.
+
+  Parameters:
+  - cb : callback to be executed
+
+  Returns: nothing
+
 ## Queue
 FIFO structure.
+
+### Available Methods
+
+* **toString()**
+
+  Processes a string representation.
+
+  Returns: string
+
+* **push(element[, cb])**
+
+  Adds an element to the structure.
+
+  Parameters:
+  - element : an object to be added
+  - cb : callback to be executed
+
+  Returns: nothing
+
+* **pop([, cb])**
+
+  Removes the last item from the list.
+
+  Parameters:
+  - cb : callback to be executed
+
+  Returns: obj; the removed item
+
+* **hasNext()**
+
+  Decides if there are any items left.
+  Returns: boolean
+
+* **empty([, cb])**
+
+  Empties the structure.
+
+  Parameters:
+  - cb : callback to be executed
+
+  Returns: nothing
