@@ -1,7 +1,7 @@
 [![Stories in Ready](https://badge.waffle.io/malpercio/data-holder.png?label=ready&title=Ready)](https://waffle.io/malpercio/data-holder)
 [![Build Status](https://travis-ci.org/malpercio/data-holder.svg?branch=master)](https://travis-ci.org/malpercio/data-holder)
-[![Dependencies](https://david-dm.org/malpercio/data-holder.svg](https://david-dm.org/malpercio/data-holder)
-[![DevDependencies](https://david-dm.org/malpercio/data-holder/dev-status.svg](https://david-dm.org/malpercio/data-holder)
+[![Build Status](https://david-dm.org/malpercio/data-holder.svg)](https://travis-ci.org/malpercio/data-holder)
+[![DevDependencies](https://david-dm.org/malpercio/data-holder/dev-status.svg)](https://david-dm.org/malpercio/data-holder)
 
 # data-holder
 A NodeJS package that provides asynchronous implementations for some data structures, with the flexibility in this world divided by callbacks and promises.
