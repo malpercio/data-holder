@@ -41,12 +41,12 @@ function factory(AbstractList, Node, promiseLibrary, callback, returnInnerClasse
     }
 
     shift(cb){
-      if(this.length == 0){
+      if(this.length === 0){
         return undefined;
       }
       this.length--;
       let savedHead = this.head;
-      if (this.length == 0){
+      if (this.length === 0){
         this.head = this.tail = undefined;
         return callback(null, cb, savedHead.value);
       }
@@ -56,11 +56,11 @@ function factory(AbstractList, Node, promiseLibrary, callback, returnInnerClasse
 
     pop(cb){
       let i;
-      if(this.length == 0){
+      if(this.length === 0){
         return callback(null, cb, undefined);
       }
       this.length--;
-      if (this.length == 0){
+      if (this.length === 0){
         let savedValue = this.head.value;
         this.head = this.tail = undefined;
         return callback(null, cb, savedValue);
