@@ -1,4 +1,4 @@
-let eq = require('lodash/isEqualWith');
+var comparatorFactory = require('../lib/comparator');
 
 function factory(promiseLibrary, callback){
 
@@ -11,10 +11,11 @@ function factory(promiseLibrary, callback){
 
   class List{
 
-    constructor(){
+    constructor(compareTo){
       this.length = 0;
       this.head  = undefined;
       this.tail = undefined;
+      this.compareTo = comparatorFactory(compareTo);
     }
 
     *[Symbol.iterator](){
@@ -33,7 +34,7 @@ function factory(promiseLibrary, callback){
       let currentNode = this.head,
         i;
       for (i = 1; i <= this.length; i++){
-        if (eq(currentNode.value, element)){
+        if (this.compareTo(currentNode.value, element) === 0){
           return true;
         }
         currentNode = currentNode.next;

@@ -11,7 +11,7 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
       this.length++;
 
       for(i = this.head; i!= undefined; i = i.next){
-        if(lte(element, i.value)){
+        if(this.compareTo(element, i.value) <= 0){
           previous = i.prev;
           next = i.next;
           break;
