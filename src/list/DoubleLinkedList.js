@@ -9,6 +9,11 @@ function factory(AbstractList, Node, promiseLibrary, callback, returnInnerClasse
 
   class List extends AbstractList{
 
+    constructor(){
+      super();
+      this.push = this.add;
+    }
+
     add(element, cb){
       this.length++;
       if (this.length === 1){

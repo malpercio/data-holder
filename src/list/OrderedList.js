@@ -36,6 +36,11 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
       return callback(err,cb)
     }
 
+    push(element, cb){
+      let err = new TypeError('Unsupported push operation');
+      return callback(err,cb)
+    }
+
   }
   if (returnInnerClasses){
     return [List, ListNode];
