@@ -120,6 +120,11 @@ let stack = new structures.Stack();
 ## List (a.k.a. DoubleLinkedList)
 The default implementation for List is a double linked list. Can be iterated with a `for...of`.
 
+### Constructor([compareTo])
+
+Parameters:
+  * compareTo: a function that lets you change comparisons between elements in the structure. (See compareTo)
+
 ### Available Methods
 * **contains(element)**
 
@@ -186,6 +191,12 @@ The default implementation for List is a double linked list. Can be iterated wit
 
 ## LinkedList
 Not recommended, but there also exists a one way linked list. Can be iterated with a `for...of`.
+
+### Constructor([compareTo])
+
+Parameters:
+  * compareTo: a function that lets you change comparisons between elements in the structure. (See compareTo)
+
 ### Available Methods
 * **contains(element)**
 
@@ -252,6 +263,12 @@ Not recommended, but there also exists a one way linked list. Can be iterated wi
 
 ## OrderedList
 As the name implies, it's always ordered. Can be iterated with a `for...of`.
+
+
+### Constructor([compareTo])
+
+Parameters:
+  * compareTo: a function that lets you change comparisons between elements in the structure. (See compareTo)
 
 ### Available Methods
 * **contains(element)**
@@ -394,3 +411,41 @@ FIFO structure.
   - cb : callback to be executed
 
   Returns: nothing
+
+# Additional notes
+
+There's a mention of a `compareTo` function. If you've used Java, just do the same you'd do. If you have no idea what ?m talking about, keep reading.
+`compareTo` receives two elements and compares them (wow much amaze such complications). There are three cases:
+
+```js
+let compareTo = (x, y) => {
+  if (x < y){
+    return -1; //Any negative will work.
+  }
+  if (x == y){
+    return 0; //Zero. I repeat ZERO.
+  }
+  if (x > y){
+    return 1; //Any positive will work.
+  }
+};
+```
+(I know it doesn't look too good as code, but it's self explanatory for the sake of being an example)
+
+An example to make an OrderedList descending is as follows
+
+```js
+let compareTo = (x, y) => {
+  if (x < y){
+    return 1;
+  }
+  if (x == y){
+    return 0;
+  }
+  if (x > y){
+    return -1;
+  }
+
+  let list = new OrderedList(compareTo);
+}
+```
