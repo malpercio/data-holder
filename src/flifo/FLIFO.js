@@ -28,6 +28,17 @@ function factory(promiseLibrary, callback, returnInnerClasses, add, remove){
       this.length = 0;
       return callback(null, cb);
     }
+
+    toString(){
+      let str = '[',
+        i;
+      for(i of this.elements){
+        str += i + ',';
+      }
+      str = str.substr(0, str.length - 1) + ']';
+      return str;
+    }
+
   }
   if (returnInnerClasses){
     return [FLIFO];
