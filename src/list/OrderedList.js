@@ -1,3 +1,5 @@
+let lte = require('lodash/lte');
+
 function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerClasses){
 
   class List extends AbstractList{
@@ -9,7 +11,7 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
       this.length++;
 
       for(i = this.head; i!= undefined; i = i.next){
-        if(i.value > element){
+        if(lte(element, i.value)){
           previous = i.prev;
           next = i.next;
           break;
@@ -22,10 +24,10 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
       if(next){
         next.previous = newNode;
       }
-      if(newNode.prev == undefined){
+      if(newNode.prev === undefined){
         this.head = newNode;
       }
-      if(newNode.next == undefined){
+      if(newNode.next === undefined){
         this.tail = newNode;
       }
       return callback(null, cb, null);
@@ -33,12 +35,12 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
 
     unshift(element, cb){
       let err = new TypeError('Unsupported shift operation');
-      return callback(err,cb)
+      return callback(err,cb);
     }
 
     push(element, cb){
       let err = new TypeError('Unsupported push operation');
-      return callback(err,cb)
+      return callback(err,cb);
     }
 
   }

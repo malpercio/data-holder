@@ -1,3 +1,5 @@
+let eq = require('lodash/isEqualWith');
+
 function factory(promiseLibrary, callback){
 
   class ListNode{
@@ -19,8 +21,8 @@ function factory(promiseLibrary, callback){
       let savedValue,
         currentNode,
         i;
-      currentNode= this.head;
-      for (i=1; i<= this.length; i++){
+      currentNode = this.head;
+      for (i = 1; i<= this.length; i++){
         savedValue = currentNode.value;
         currentNode = currentNode.next;
         yield savedValue;
@@ -30,8 +32,8 @@ function factory(promiseLibrary, callback){
     contains(element){
       let currentNode = this.head,
         i;
-      for (i=1; i<= this.length; i++){
-        if (currentNode.value === element){
+      for (i = 1; i <= this.length; i++){
+        if (eq(currentNode.value, element)){
           return true;
         }
         currentNode = currentNode.next;
@@ -43,7 +45,7 @@ function factory(promiseLibrary, callback){
       let currentNode = this.head,
         string = '[',
         i;
-      for (i=0; i< this.length; i++){
+      for (i = 0; i < this.length; i++){
         string += currentNode.value;
         string += currentNode.next !== undefined?',':'';
         currentNode = currentNode.next;

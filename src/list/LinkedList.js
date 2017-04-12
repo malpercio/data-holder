@@ -33,7 +33,7 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
     }
 
     shift(cb){
-      if(this.length == 0){
+      if(this.length === 0){
         return callback(null, cb, undefined);
       }
       this.length--;
@@ -48,11 +48,11 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
 
     pop(cb){
       let i;
-      if(this.length == 0){
+      if(this.length === 0){
         return callback(null, cb, undefined);
       }
       this.length--;
-      if (this.length == 0){
+      if (this.length === 0){
         let savedValue = this.head.value;
         this.head = this.tail = undefined;
         return callback(null, cb, savedValue);
