@@ -79,5 +79,22 @@ module.exports = function(implementation){
       isEmpty(testingFLIFO, done);
     });
 
+    it('should implement toString', (done) => {
+      let testingFLIFO = new FLIFO(),
+        i;
+      for (i = 1; i <= numberOfItems; i++){
+        testingFLIFO.push(i);
+      }
+      if (/^\[(\d+,)*\d+\]$/.exec(testingFLIFO.toString()).input!== testingFLIFO.toString()){
+        return done(new Error('Incorrect comma separation'));
+      }
+      for (i = 1; i <= numberOfItems; i++){
+        if (testingFLIFO.toString().indexOf(i+'') === -1){
+          return done(new Error('Missing item'+ i));
+        }
+      }
+      done();
+    });
+
   });
 }
