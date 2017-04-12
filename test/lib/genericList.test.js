@@ -36,6 +36,39 @@ module.exports = function(implementation){
       }, done);
     });
 
+    if (implementation == 'OrderedList'){
+      it('should not unshift an element', (done) => {
+        let testingList = new List();
+        times(numberOfItems, (n, next) => {
+          testingList.unshift(n, (err) => {
+            if (err){
+              return next();
+            }
+            next(new Error('OrderedList should not implement push.'));
+          });
+        }, done);
+      });
+    }
+    else{
+      it('should push an element',(done)=>{
+        let testingList = new List();
+        times(numberOfItems, (n, next) => {
+          testingList.push(n, (err) => {
+            if (err){
+              return next(err);
+            }
+            if (testingList.tail.value != n){
+              return next(new Error('Element not found after insertion'));
+            }
+            if (testingList.length !== n+1){
+              return next(new Error('Length does not increases when pushing elements'));
+            }
+            next();
+          });
+        }, done);
+      });
+    }
+
     it('should pop an element',(done)=>{
       let testingList = new List();
       times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
