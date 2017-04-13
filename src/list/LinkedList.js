@@ -2,8 +2,8 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
 
   class List extends AbstractList{
 
-    constructor(){
-      super();
+    constructor(compareTo){
+      super(compareTo);
       this.push = this.add;
     }
 

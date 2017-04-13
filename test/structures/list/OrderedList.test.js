@@ -28,6 +28,31 @@ describe('OrderedList specific behaviour', () => {
       done();
     });
 
+    it('should be ordered when adding with custom order', (done) => {
+      let compareTo = (x, y) => {
+        if(x < y){
+          return 1;
+        }
+        else if( x > y){
+          return -1;
+        }
+        return 0;
+      };
+      let testingList = new List(compareTo),
+        i,
+        j;
+      for (i=0; i <= numberOfItems; i+=3){
+        testingList.add(i);
+        for (j = testingList.head; j != testingList.tail.prev; j = j.next){
+          if (j.next && j < j.next){
+            return done(new Error('Elements not in decreasing order.'));
+          }
+        }
+        i-=2;
+      }
+      done();
+    });
+
     it('should be ordered when popping', (done) => {
       let testingList = new List(),
         i;
