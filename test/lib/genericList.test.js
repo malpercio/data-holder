@@ -3,8 +3,7 @@ module.exports = function(implementation){
   let faker = require('faker');
   let times = require('async/times');
 
-  let dataHolder = require('../../index.js')();
-  let List = dataHolder[implementation];
+  let List = require('../../index.js')('Default', implementation);
 
   let numberOfItems = faker.random.number()%100 + 1;
   let arbitraryElement = 'Bunny';

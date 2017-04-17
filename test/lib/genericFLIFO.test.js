@@ -4,9 +4,8 @@ module.exports = function(implementation){
 
   let numberOfItems = faker.random.number()%100 + 1;
 
-  let dataHolder = require('../../index.js')('Sync');
-  let FLIFO = dataHolder[implementation];
-
+  let FLIFO = require('../../index.js')('Sync', implementation);
+  
   function isEmpty (testingFLIFO, done){
     if(testingFLIFO.length != 0){
       return done(new Error('FLIFO has a non zero initial length'));

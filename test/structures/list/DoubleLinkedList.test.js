@@ -4,8 +4,7 @@ let faker = require('faker');
 let numberOfItems = faker.random.number()%100 + 1;
 let arbitraryElement = 'Bunny';
 
-let dataHolder = require('../../../index.js')('Sync');
-let List = dataHolder.DoubleLinkedList;
+let List = require('../../../index.js')('Sync','DoubleLinkedList');
 
 let genericTests = require('../../lib/genericList.test')('DoubleLinkedList');
 let tests = (name) => {
