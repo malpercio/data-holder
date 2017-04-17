@@ -77,6 +77,8 @@ p3
     console.log("):");
   });
 ```
+Just as a pro-tip, you can also pass the string `default` or `Default` and get the same behaviour (callbacks and Node's promise).
+
 
 But maybe, you are already using a promise library, then send the function through parameter. Don't worry, I'm pretty bad at explaining, let's see it it action (with **Bluebird**)
 ```js
@@ -106,6 +108,42 @@ p3
 ```
 And that's how you use it with Bluebird. And, yes, I didn't bothered to change the example.
 
+Also, you don't need to import all of the structures (which we have been doing on the previous examples). Let's say you only need a **list with callbacks**; the second parameter must be a string with the name of the structure. Be careful, this returns the structure directly.
+```js
+let List = require(data-holder)('Default', 'List');
+
+//Blah, blah, bla
+
+//You simply pass the callback as an extra parameter.
+let l = new List();                                        // []
+l.add(13, () => {                                          // [42, 13]
+    l.unshift(42, () => {
+      l.pop((err, element) => {                            // [42]
+        console.log(element);
+      });                                      
+    });
+});
+```
+
+Also, you might need **more than one structure at the same time**, to require them is as simple as passing an array of strings. It gives you the same arrangement as if you imported all of the structures available.
+```js
+let data-holder = require(data-holder)('Default', 'List', 'OrderedList');
+let List = structures.List;
+let OrderedList = structures.OrderedList;
+
+//Blah, blah, blah...
+
+//You simply pass the callback as an extra parameter.
+let l = new List();                                        // []
+let l2 = new OrderedList();                                // []
+l.add(13, () => {                                          // [42, 13]
+    l.unshift(42, () => {
+      l.pop((err, element) => {                            // [42]
+        console.log(element);
+      });                                      
+    });
+});
+```
 
 # Structures
 
