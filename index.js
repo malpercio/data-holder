@@ -1,13 +1,34 @@
-module.exports = (promiseLibrary) => {
-  if(!promiseLibrary){
+let available = {
+  LinkedList: './src/list/LinkedList',
+  DoubleLinkedList: './src/list/DoubleLinkedList',
+  List: './src/list/DoubleLinkedList',
+  OrderedList: './src/list/OrderedList',
+  Queue: './src/flifo/Queue',
+  Stack: './src/flifo/Stack'
+};
+
+module.exports = (promiseLibrary, structures) => {
+  if(!promiseLibrary || promiseLibrary === 'Default' || promiseLibrary === 'default'){
     promiseLibrary = global.Promise;
   }
-  return {
-    LinkedList: require('./src/list/LinkedList')(promiseLibrary),
-    DoubleLinkedList: require('./src/list/DoubleLinkedList')(promiseLibrary),
-    List: require('./src/list/DoubleLinkedList')(promiseLibrary),
-    OrderedList: require('./src/list/OrderedList')(promiseLibrary),
-    Queue: require('./src/flifo/Queue')(promiseLibrary),
-    Stack: require('./src/flifo/Stack')(promiseLibrary)
+  let some = Array.isArray(structures);
+  let unique = typeof(structures) == 'string';
+  let dataStructures = {};
+  if(unique){
+    if(available[structures]){
+      dataStructures = require(available[structures])(promiseLibrary);
+    }
+  }else if(some){
+      for(structure in structures){
+        if(available[structure]){
+          dataStructures[structure] = require(available[structure])(promiseLibrary);
+        }
+      }
+    }
+  else{
+    for (structure in available){
+        dataStructures[structure] = require(available[structure])(promiseLibrary);
+      }
   }
+  return dataStructures;
 };
