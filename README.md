@@ -145,6 +145,36 @@ l.add(13, () => {                                          // [42, 13]
 });
 ```
 
+# Some useful functions
+
+There are some methods available in every data structure. For sake of repetition, we'll ignore their specification later.
+
+## Available methods
+  * **reduce(fx, cb)**
+
+    Applies a function to every single element and returns a value. For example, if you wanted to compute the sum of the values in a data structure.
+
+    Parameters:
+    - fx : a function to be applied. Must have the following signature: `(x , y) => z` It will execute the function two by two.
+    - cb : callback to be executed
+
+    Returns: Resulting value of fx in the data structure
+
+    Example:
+    ```js
+    let List = require('data-holder')('Default', 'List');
+    let l = new List();
+    let fx = (x,y) => x + y;
+    l.add(1, () => {
+      l.add(2, () => {
+        l.add(663, () => {
+          l.reduce(fx, console.log);                      // Prints 666
+        });
+      });
+    });
+
+    ```
+
 # Structures
 
 Let's talk about what it's already been implemented. To access any of these, you must call the corresponding constructor located in the object returned from the function that is brought by `require`.

@@ -8,14 +8,9 @@ module.exports = function(implementation){
   let numberOfItems = faker.random.number()%100 + 1;
   let arbitraryElement = 'Bunny';
 
+  let genericDataStructureTests = require('./genericDataStructure.test')(implementation);
+
   describe('Generic list behaviour - ' + implementation, () => {
-    it('should create an object', function(done){
-      let testingList = new List();
-      if (typeof testingList == 'object' && testingList instanceof List){
-        return done();
-      }
-        return done(new Error('Not an object'));
-    });
 
     it('should add an element',(done)=>{
       let testingList = new List();

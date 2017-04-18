@@ -1,7 +1,6 @@
 var comparatorFactory = require('../lib/comparator');
-let DataStructure = require('../DataStructure');
 
-function factory(promiseLibrary, callback){
+function factory(DataStructure, promiseLibrary, callback){
 
   class ListNode{
     constructor(value, next){
