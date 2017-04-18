@@ -23,7 +23,12 @@ module.exports = function(implementation){
         i;
         for(i = 1; i<= numberOfItems; i++){
           total += i;
-          testingDataStructure.add(i);
+          if(testingDataStructure.add){
+            testingDataStructure.add(i);
+          }
+          else{
+            testingDataStructure.push(i);
+          }
         }
         if (testingDataStructure.reduce(fx) !== total){
           return done(new Error('Bad Total'));

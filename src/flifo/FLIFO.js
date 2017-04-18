@@ -40,7 +40,19 @@ function factory(DataStructure, promiseLibrary, callback, returnInnerClasses, ad
       return str;
     }
 
-    reduce(fx){
+    reduce(fx, cb){
+      let i,
+        first = true,
+        previous;
+      for(i = 0; i < this.elements.length; i++){
+        if (first){
+          first = false;
+          previous = this.elements[i];
+          continue;
+        }
+        previous = fx(this.elements[i], previous);
+      }
+      return callback(cb, null, previous);
     }
 
   }

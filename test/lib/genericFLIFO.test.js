@@ -16,6 +16,8 @@ module.exports = function(implementation){
     done();
   }
 
+  let genericDataStructureTests = require('./genericDataStructure.test')(implementation);
+
   describe('Generic FLIFO behaviour', () => {
 
     it('should add at bottom', (done) => {
