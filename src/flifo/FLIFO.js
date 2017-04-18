@@ -1,8 +1,11 @@
+let DataStructure = require('../DataStructure');
+
 function factory(promiseLibrary, callback, returnInnerClasses, add, remove){
 
-  class FLIFO{
+  class FLIFO extends DataStructure{
 
     constructor(){
+      super();
       this.elements = [];
       this.length = 0;
     }
