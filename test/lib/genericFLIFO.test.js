@@ -5,7 +5,7 @@ module.exports = function(implementation){
   let numberOfItems = faker.random.number()%100 + 1;
 
   let FLIFO = require('../../index.js')('Sync', implementation);
-  
+
   function isEmpty (testingFLIFO, done){
     if(testingFLIFO.length != 0){
       return done(new Error('FLIFO has a non zero initial length'));
@@ -17,14 +17,6 @@ module.exports = function(implementation){
   }
 
   describe('Generic FLIFO behaviour', () => {
-
-    it('should create an object', function(done){
-      let testingList = new FLIFO();
-      if (typeof testingList == 'object' && testingList instanceof FLIFO){
-        return done();
-      }
-      return done(new Error('Not an object'));
-    });
 
     it('should add at bottom', (done) => {
       let testingFLIFO = new FLIFO(),

@@ -1,6 +1,4 @@
-let DataStructure = require('../DataStructure');
-
-function factory(promiseLibrary, callback, returnInnerClasses, add, remove){
+function factory(DataStructure, promiseLibrary, callback, returnInnerClasses, add, remove){
 
   class FLIFO extends DataStructure{
 
@@ -42,6 +40,9 @@ function factory(promiseLibrary, callback, returnInnerClasses, add, remove){
       return str;
     }
 
+    reduce(fx){
+    }
+
   }
   if (returnInnerClasses){
     return [FLIFO];
@@ -51,5 +52,6 @@ function factory(promiseLibrary, callback, returnInnerClasses, add, remove){
 
 module.exports = (promiseLibrary, returnInnerClasses, add, remove) => {
   var callback = require('../lib/callbackToPromise')(promiseLibrary);
-  return factory(promiseLibrary, callback, returnInnerClasses, add, remove);
+  let DataStructure = require('../DataStructure')(promiseLibrary);
+  return factory(DataStructure, promiseLibrary, callback, returnInnerClasses, add, remove);
 };

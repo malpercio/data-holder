@@ -91,6 +91,7 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
 
 module.exports = (promiseLibrary, returnInnerClasses) => {
   var callback = require('../lib/callbackToPromise')(promiseLibrary);
-  var [List, ListNode] = require('./AbstractList')(promiseLibrary, callback);
+  let DataStructure = require('../DataStructure')(promiseLibrary);
+  var [List, ListNode] = require('./AbstractList')(DataStructure, promiseLibrary, callback);
   return factory(List, ListNode, promiseLibrary, callback, returnInnerClasses);
 };
