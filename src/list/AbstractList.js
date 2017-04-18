@@ -1,4 +1,5 @@
 var comparatorFactory = require('../lib/comparator');
+let DataStructure = require('../DataStructure');
 
 function factory(promiseLibrary, callback){
 
@@ -9,9 +10,10 @@ function factory(promiseLibrary, callback){
     }
   }
 
-  class List{
+  class List extends DataStructure{
 
     constructor(compareTo){
+      super();
       this.length = 0;
       this.head  = undefined;
       this.tail = undefined;
