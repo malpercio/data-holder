@@ -1,3 +1,4 @@
+'use strict';
 let series = require('async/series');
 
 function factory(DataStructure, promiseLibrary, callback, returnInnerClasses, add, remove){

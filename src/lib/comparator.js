@@ -1,3 +1,4 @@
+'use strict';
 let lt = require('lodash/lte');
 let eq = require('lodash/isEqualWith');
 

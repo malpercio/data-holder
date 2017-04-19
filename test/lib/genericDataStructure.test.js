@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function(implementation){
   let assert = require('assert');
   let faker = require('faker');
