@@ -150,6 +150,34 @@ l.add(13, () => {                                          // [42, 13]
 There are some methods available in every data structure. For sake of repetition, we'll ignore their specification later. Also, note that if you're using a custom order, it will be kept.
 
 ## Available methods
+
+* **map(fx[, cb])**
+
+  Applies a function to every single element and returns the same structure but the elements altered. If the order was altered, the structures won't de identical.
+
+  Parameters:
+  - fx : a function to be applied. Must have the following signature: `(x) => z` It will execute the function one by one;
+  - cb : callback to be executed
+
+  Returns: A new data structure of the same type with its elements altered
+
+  Example:
+  ```js
+  let List = require('data-holder')('Default', 'List');
+  let l = new List();
+  let fx = (x) => x * x;
+  l.add(1, () => {
+    l.add(2, () => {
+      l.add(663, () => {
+        l.filter(fx, (err, l2) => {
+          console.log(l2.toString())          // Prints [1,4,439569]
+        });                      
+      });
+    });
+  });
+
+  ```
+
 * **filter(fx[, cb])**
 
   Applies a function to every single element and returns the same structure but the elements filtered.
@@ -169,37 +197,38 @@ There are some methods available in every data structure. For sake of repetition
     l.add(2, () => {
       l.add(663, () => {
         l.filter(fx, (err, l2) => {
-          console.log(l2.toString())
-        });                      // Prints [1,2]
+          console.log(l2.toString())                             // Prints [1,2]
+        });                      
       });
     });
   });
 
   ```
-  * **reduce([fx, cb])**
 
-    Applies a function to every single element and returns a value. For example, if you wanted to compute the sum of the values in a data structure.
+* **reduce([fx, cb])**
 
-    Parameters:
-    - fx : a function to be applied. Must have the following signature: `(x , y) => z` It will execute the function two by two.
-    - cb : callback to be executed
+  Applies a function to every single element and returns a value. For example, if you wanted to compute the sum of the values in a data structure.
 
-    Returns: Resulting value of fx in the data structure
+  Parameters:
+  - fx : a function to be applied. Must have the following signature: `(x , y) => z` It will execute the function two by two.
+  - cb : callback to be executed
 
-    Example:
-    ```js
-    let List = require('data-holder')('Default', 'List');
-    let l = new List();
-    let fx = (x,y) => x + y;
-    l.add(1, () => {
-      l.add(2, () => {
-        l.add(663, () => {
-          l.reduce(fx, console.log);                      // Prints 666
-        });
+  Returns: Resulting value of fx in the data structure
+
+  Example:
+  ```js
+  let List = require('data-holder')('Default', 'List');
+  let l = new List();
+  let fx = (x,y) => x + y;
+  l.add(1, () => {
+    l.add(2, () => {
+      l.add(663, () => {
+        l.reduce(fx, console.log);                      // Prints 666
       });
     });
+  });
 
-    ```
+  ```
 
 # Structures
 
