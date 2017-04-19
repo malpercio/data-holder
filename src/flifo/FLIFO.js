@@ -69,6 +69,16 @@ function factory(DataStructure, promiseLibrary, callback, returnInnerClasses, ad
       series(functions, (err) => {return callback(err, cb, newStructure)})
     }
 
+    map(fx, cb){
+      let newStructure,
+        functions = [];
+      newStructure = new this.constructor(this.compareTo);
+      for(let element of this.elements){
+          functions.push((next) => {newStructure.push(fx(element), next)});
+      }
+      series(functions, (err) => {return callback(err, cb, newStructure)})
+    }
+
   }
   if (returnInnerClasses){
     return [FLIFO];

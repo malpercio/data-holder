@@ -32,6 +32,16 @@ function factory(promiseLibrary, callback, returnInnerClasses){
         series(functions, (err) => {return callback(err, cb, newStructure)})
       }
 
+      map(fx, cb){
+        let newStructure,
+          functions = [];
+        newStructure = new this.constructor(this.compareTo);
+        for(let element of this){
+            functions.push((next) => {newStructure.add(fx(element), next)});
+        }
+        series(functions, (err) => {return callback(err, cb, newStructure)})
+      }
+
   }
 
   if(returnInnerClasses){
