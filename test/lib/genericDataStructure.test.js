@@ -67,5 +67,39 @@ module.exports = function(implementation){
 
     });
 
+    it('should map',(done) => {
+      let testingDataStructure = new DataStructure(),
+        fx = (x) => x * x,
+        i;
+        for(i = 1; i<= numberOfItems; i++){
+          if(testingDataStructure.add){
+            testingDataStructure.add(i);
+          }
+          else{
+            testingDataStructure.push(i);
+          }
+        }
+        testingDataStructure.map(fx, (err, newStructure) => {
+          if(newStructure.length === 0){
+            return done("No elements added");
+          }
+          if(newStructure[Symbol.iterator]){
+            for (i of newStructure){
+              if(Math.sqrt(i) > numberOfItems){
+                return done(new Error('The map wasn\'t applied correctly'));
+              }
+            }
+            return done();
+          }
+          while(newStructure.hasNext()){
+            if(Math.sqrt(i) > numberOfItems){
+              return done(new Error('The map wasn\'t applied correctly'));
+            }
+            return done();
+          }
+        });
+
+    });
+
   });
 }
