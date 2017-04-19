@@ -1,3 +1,4 @@
+'use strict';
 let assert = require('assert');
 let faker = require('faker');
 
@@ -203,6 +204,7 @@ describe('Equivalence from callback to syncronous in an arbitrary structure', ()
   });
 
   it('should have the given length', function(done){
+    let i;
     let testingList = new List(),
       repopulate = ()=>{
       for (i = 1; i <= numberOfItems; i++){

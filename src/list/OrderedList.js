@@ -1,3 +1,4 @@
+'use strict';
 let lte = require('lodash/lte');
 
 function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerClasses){

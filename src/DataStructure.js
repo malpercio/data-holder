@@ -1,3 +1,4 @@
+'use strict';
 let series = require('async/series');
 
 function factory(promiseLibrary, callback, returnInnerClasses){

@@ -1,3 +1,4 @@
+'use strict';
 module.exports = function(implementation){
   let assert = require('assert');
   let faker = require('faker');
@@ -172,7 +173,8 @@ module.exports = function(implementation){
     });
 
     it('should find an existing item',function(done){
-      let testingList = new List();
+      let testingList = new List(),
+      i;
       times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
         if(err){
           return done(err);
@@ -188,7 +190,8 @@ module.exports = function(implementation){
 
     it('should be an iterable', (done)=>{
       let testingList = new List(),
-      i;
+      i,
+      item;
       times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
         if (err){
           return done(err);

@@ -1,3 +1,4 @@
+'use strict';
 module.exports = (promiseLibrary) => {
   if (typeof(promiseLibrary) !== 'function'){
     return (err, cb, result) => {

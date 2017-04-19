@@ -1,3 +1,4 @@
+'use strict';
 function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerClasses){
 
   class List extends AbstractList{

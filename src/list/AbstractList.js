@@ -1,3 +1,4 @@
+'use strict';
 var comparatorFactory = require('../lib/comparator');
 
 function factory(DataStructure, promiseLibrary, callback){
