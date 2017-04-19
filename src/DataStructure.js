@@ -1,3 +1,5 @@
+let series = require('async/series');
+
 function factory(promiseLibrary, callback, returnInnerClasses){
   class DataStructure{
 
@@ -15,7 +17,19 @@ function factory(promiseLibrary, callback, returnInnerClasses){
           }
           previous = fx(element, previous);
         }
-        return callback(cb, null, previous);
+        return callback(null, cb, previous);
+      }
+
+      filter(fx, cb){
+        let newStructure,
+          functions = [];
+        newStructure = new this.constructor(this.compareTo);
+        for(let element of this){
+          if(fx(element)){
+            functions.push((next) => {newStructure.add(element, next)});
+          }
+        }
+        series(functions, (err) => {return callback(err, cb, newStructure)})
       }
 
   }

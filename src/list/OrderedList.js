@@ -13,7 +13,7 @@ function factory(AbstractList, ListNode, promiseLibrary, callback, returnInnerCl
       for(i = this.head; i!= undefined; i = i.next){
         if(this.compareTo(element, i.value) <= 0){
           previous = i.prev;
-          next = i.next;
+          next = i;
           break;
         }
       }

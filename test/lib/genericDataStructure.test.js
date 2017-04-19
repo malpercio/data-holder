@@ -36,5 +36,36 @@ module.exports = function(implementation){
         done();
     });
 
+    it('should filter',(done) => {
+      let testingDataStructure = new DataStructure(),
+        fx = (x) => x < 0,
+        i;
+        for(i = 1; i<= numberOfItems; i++){
+          if(testingDataStructure.add){
+            testingDataStructure.add(i * Math.pow(-1,i));
+          }
+          else{
+            testingDataStructure.push(i * Math.pow(-1,i));
+          }
+        }
+        testingDataStructure.filter(fx, (err, newStructure) => {
+          if(newStructure[Symbol.iterator]){
+            for (i of newStructure){
+              if(i >= 0){
+                return done(new Error('The filter has a hole!'));
+              }
+            }
+            return done();
+          }
+          while(newStructure.hasNext()){
+            if(newStructure.pop() >= 0){
+              return done(new Error('The filter has a hole!'));
+            }
+            return done();
+          }
+        });
+
+    });
+
   });
 }
