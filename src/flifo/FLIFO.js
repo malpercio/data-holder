@@ -1,3 +1,5 @@
+let series = require('async/series');
+
 function factory(DataStructure, promiseLibrary, callback, returnInnerClasses, add, remove){
 
   class FLIFO extends DataStructure{
@@ -52,7 +54,19 @@ function factory(DataStructure, promiseLibrary, callback, returnInnerClasses, ad
         }
         previous = fx(this.elements[i], previous);
       }
-      return callback(cb, null, previous);
+      return callback(null, cb, previous);
+    }
+
+    filter(fx, cb){
+      let newStructure,
+        functions = [];
+      newStructure = new this.constructor();
+      for(let element of this.elements){
+        if(fx(element)){
+          functions.push((next) => {newStructure.push(element, next)});
+        }
+      }
+      series(functions, (err) => {return callback(err, cb, newStructure)})
     }
 
   }
