@@ -1,6 +1,6 @@
 {
   "name": "data-holder",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A NodeJS package that provides implementations of some data structures",
   "main": "index.js",
   "scripts": {
