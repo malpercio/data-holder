@@ -33,6 +33,13 @@ function factory(DataStructure, promiseLibrary, callback, returnInnerClasses, ad
       return callback(null, cb);
     }
 
+    *[Symbol.iterator](){
+      let value;
+      for(value of this.elements){
+        yield value;
+      }
+    }
+
     toString(){
       let str = '[',
         i;

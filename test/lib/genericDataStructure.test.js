@@ -2,6 +2,7 @@
 module.exports = function(implementation){
   let assert = require('assert');
   let faker = require('faker');
+  let times = require('async/times');
 
   let numberOfItems = faker.random.number()%100 + 1;
 
@@ -21,15 +22,11 @@ module.exports = function(implementation){
       let testingDataStructure = new DataStructure(),
         total = 0,
         fx = (x, y) => x + y,
-        i;
+        i,
+        method = testingDataStructure.add? 'add': 'push';
         for(i = 1; i<= numberOfItems; i++){
           total += i;
-          if(testingDataStructure.add){
-            testingDataStructure.add(i);
-          }
-          else{
-            testingDataStructure.push(i);
-          }
+          testingDataStructure[method](i);
         }
         if (testingDataStructure.reduce(fx) !== total){
           return done(new Error('Bad Total'));
@@ -40,14 +37,10 @@ module.exports = function(implementation){
     it('should filter',(done) => {
       let testingDataStructure = new DataStructure(),
         fx = (x) => x < 0,
-        i;
+        i,
+        method = testingDataStructure.add? 'add': 'push';
         for(i = 1; i<= numberOfItems; i++){
-          if(testingDataStructure.add){
-            testingDataStructure.add(i * Math.pow(-1,i));
-          }
-          else{
-            testingDataStructure.push(i * Math.pow(-1,i));
-          }
+          testingDataStructure[method](i * Math.pow(-1,i));
         }
         testingDataStructure.filter(fx, (err, newStructure) => {
           if(newStructure[Symbol.iterator]){
@@ -71,14 +64,10 @@ module.exports = function(implementation){
     it('should map',(done) => {
       let testingDataStructure = new DataStructure(),
         fx = (x) => x * x,
-        i;
+        i,
+        method = testingDataStructure.add? 'add': 'push';
         for(i = 1; i<= numberOfItems; i++){
-          if(testingDataStructure.add){
-            testingDataStructure.add(i);
-          }
-          else{
-            testingDataStructure.push(i);
-          }
+          testingDataStructure[method](i);
         }
         testingDataStructure.map(fx, (err, newStructure) => {
           if(newStructure.length === 0){
@@ -100,6 +89,26 @@ module.exports = function(implementation){
           }
         });
 
+    });
+
+    it('should be an iterable', (done)=>{
+      let testingDataStructure = new DataStructure(),
+      i,
+      item,
+      method = testingDataStructure.add? 'add': 'push';
+      times(numberOfItems, (n,next) => {testingDataStructure[method](n,next)}, (err) => {
+        if (err){
+          return done(err);
+        }
+        i=0;
+        for(item of testingDataStructure){
+          if (item !== i){
+            return done(new Error('Item not found in place'));
+          }
+          i++;
+        }
+        done();
+      });
     });
 
   });

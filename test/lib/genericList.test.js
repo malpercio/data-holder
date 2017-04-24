@@ -188,24 +188,6 @@ module.exports = function(implementation){
       });
     });
 
-    it('should be an iterable', (done)=>{
-      let testingList = new List(),
-      i,
-      item;
-      times(numberOfItems, (n,next) => {testingList.add(n,next)}, (err) => {
-        if (err){
-          return done(err);
-        }
-        i=0;
-        for(item of testingList){
-          if (item !== i){
-            return done(new Error('Item not found in place'));
-          }
-          i++;
-        }
-        done();
-      });
-    });
 
     it('should implement toString',(done)=>{
       let testingList = new List(),
